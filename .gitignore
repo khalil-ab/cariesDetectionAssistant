@@ -1,0 +1,23 @@
+# Donnees et modeles (geres hors Git)
+/data
+/models
+*.pth
+*.pt
+*.h5
+
+# MLflow / DVC
+/mlruns
+mlflow.db
+/.dvc/cache
+/.dvc/tmp
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+env/
+.ipynb_checkpoints/
+
+# Divers
+.DS_Store

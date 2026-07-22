@@ -1,0 +1,14 @@
+numpy
+pandas
+opencv-python
+matplotlib
+scikit-learn
+torch
+torchvision
+mlflow
+dvc
+fastapi
+uvicorn
+streamlit
+chromadb
+sentence-transformers
