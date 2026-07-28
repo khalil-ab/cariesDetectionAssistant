@@ -19,5 +19,11 @@ venv/
 env/
 .ipynb_checkpoints/
 
+# Secrets
+.env
+
+# Index vectoriel (regenere par src/rag/ingest.py)
+/chroma_caries
+
 # Divers
 .DS_Store
