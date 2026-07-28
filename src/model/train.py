@@ -16,12 +16,11 @@ import random
 import numpy as np
 import torch
 from torch.utils.data import DataLoader
-from sklearn.model_selection import train_test_split
 
 import mlflow
 
 from src import config
-from src.data.dataset import CariesDataset, lister_paires
+from src.data.dataset import CariesDataset, lister_paires, split_dataset
 from src.model.unet import UNet
 from src.model.metrics import DiceBCELoss, dice_coeff, iou_score
 
@@ -50,10 +49,9 @@ def main():
     print("Device :", device)
 
     paires = lister_paires(config.TRAIN_IMAGES, config.TRAIN_LABELS)
-    print("Paires image/masque :", len(paires))
-    train_p, val_p = train_test_split(
-        paires, test_size=config.VAL_SPLIT, random_state=config.SEED
-    )
+    train_p, val_p, test_p = split_dataset(paires)
+    print(f"Paires : {len(paires)} (train {len(train_p)} / "
+          f"val {len(val_p)} / test {len(test_p)})")
 
     train_loader = DataLoader(
         CariesDataset(train_p), batch_size=config.BATCH_SIZE, shuffle=True

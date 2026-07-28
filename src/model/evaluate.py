@@ -16,7 +16,7 @@ import torch
 from torch.utils.data import DataLoader
 
 from src import config
-from src.data.dataset import CariesDataset, lister_paires
+from src.data.dataset import CariesDataset, lister_paires, split_dataset
 from src.model.unet import UNet
 from src.model.metrics import dice_coeff, iou_score
 
@@ -66,7 +66,10 @@ def evaluer_unet(paires, device):
 
 def main():
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    paires = lister_paires(config.TEST_IMAGES, config.TEST_LABELS)
+    # Jeu de test de la MEME distribution que l'entrainement (imagettes train/),
+    # jamais vu pendant l'entrainement grace au split deterministe.
+    paires_all = lister_paires(config.TRAIN_IMAGES, config.TRAIN_LABELS)
+    _, _, paires = split_dataset(paires_all)
     print("Images de test :", len(paires))
 
     dice_b, iou_b = baseline_otsu(paires)

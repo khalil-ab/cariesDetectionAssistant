@@ -7,8 +7,24 @@ import cv2
 import numpy as np
 import torch
 from torch.utils.data import Dataset
+from sklearn.model_selection import train_test_split
 
 from src import config
+
+
+def split_dataset(paires, seed=config.SEED):
+    """
+    Decoupe deterministe train / val / test a partir d'une meme distribution.
+    Le test n'est jamais utilise pendant l'entrainement -> evaluation honnete.
+    """
+    trainval, test = train_test_split(
+        paires, test_size=config.TEST_SPLIT, random_state=seed
+    )
+    val_ratio = config.VAL_SPLIT / (1 - config.TEST_SPLIT)
+    train, val = train_test_split(
+        trainval, test_size=val_ratio, random_state=seed
+    )
+    return train, val, test
 
 
 def lister_paires(dossier_images, dossier_labels):
