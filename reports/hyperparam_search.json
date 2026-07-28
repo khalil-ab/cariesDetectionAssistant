@@ -1,0 +1,11 @@
+{
+  "protocole": "4 configurations, 12 epochs chacune, meme split train/val (Bloc 6)",
+  "configs": [
+    {"lr": 0.001, "base": 32, "taille": 256, "dice_val": 0.3187},
+    {"lr": 0.0005, "base": 32, "taille": 256, "dice_val": 0.3433},
+    {"lr": 0.001, "base": 16, "taille": 256, "dice_val": 0.3574},
+    {"lr": 0.001, "base": 32, "taille": 192, "dice_val": 0.3991}
+  ],
+  "meilleure": {"lr": 0.001, "base": 32, "taille": 192, "dice_val": 0.3991},
+  "note": "Meilleure config a 12 epochs. Le modele de production reste entraine en taille 256 sur 25 epochs (coherence de l'inference) : Dice test 0.42-0.46 selon le run."
+}
