@@ -1,0 +1,34 @@
+{
+  "train": {
+    "sous_ensemble": "train",
+    "nb_images": 2389,
+    "images_sans_carie": 0,
+    "images_avec_carie": 2389,
+    "part_pixels_carie_moyenne_%": 1.048,
+    "part_pixels_carie_max_%": 14.486,
+    "tailles_images": [
+      [
+        384,
+        384
+      ]
+    ]
+  },
+  "test": {
+    "sous_ensemble": "test",
+    "nb_images": 100,
+    "images_sans_carie": 0,
+    "images_avec_carie": 100,
+    "part_pixels_carie_moyenne_%": 0.124,
+    "part_pixels_carie_max_%": 0.386,
+    "tailles_images": [
+      [
+        1435,
+        2943
+      ],
+      [
+        1435,
+        2944
+      ]
+    ]
+  }
+}

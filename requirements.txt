@@ -6,9 +6,13 @@ scikit-learn
 torch
 torchvision
 mlflow
-dvc
 fastapi
 uvicorn
 streamlit
 chromadb
-sentence-transformers
+langchain
+langchain-community
+langchain-chroma
+langchain-text-splitters
+langchain-google-genai
+python-dotenv
