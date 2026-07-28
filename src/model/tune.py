@@ -72,24 +72,19 @@ def main():
     mlflow.set_experiment("caries-hyperparam")
     resultats = []
     meilleur = {"dice_val": -1}
-    meilleur_modele = None
 
     for i, cfg in enumerate(GRILLE, 1):
         with mlflow.start_run(run_name=f"config-{i}"):
             mlflow.log_params(cfg)
-            dice_val, modele = entrainer_config(cfg, train_p, val_p, device)
+            dice_val, _ = entrainer_config(cfg, train_p, val_p, device)
             mlflow.log_metric("dice_val", dice_val)
             print(f"config {i} {cfg} -> dice_val {dice_val:.4f}")
             resultats.append({**cfg, "dice_val": round(dice_val, 4)})
             if dice_val > meilleur["dice_val"]:
                 meilleur = {**cfg, "dice_val": round(dice_val, 4)}
-                meilleur_modele = modele
 
-    os.makedirs(config.MODELS_DIR, exist_ok=True)
-    if meilleur_modele is not None:
-        torch.save(meilleur_modele.state_dict(),
-                   os.path.join(config.MODELS_DIR, "unet_caries.pth"))
-
+    # NB : on ne remplace PAS models/unet_caries.pth (modele de production issu
+    # de src.model.train, taille 256). Le tuning sert a comparer et documenter.
     os.makedirs(config.REPORTS_DIR, exist_ok=True)
     with open(os.path.join(config.REPORTS_DIR, "hyperparam_search.json"), "w",
               encoding="utf-8") as f:
