@@ -1,6 +1,13 @@
 {
+  "jeu_de_test": "meme distribution que l'entrainement (split train/val/test), 359 images",
   "baseline_otsu": {
-    "dice": 0.003604111478688907,
-    "iou": 0.0018068518689331426
-  }
+    "dice": 0.0218,
+    "iou": 0.0112
+  },
+  "unet": {
+    "dice": 0.4653,
+    "iou": 0.3548
+  },
+  "meilleur_dice_validation": 0.4529,
+  "note": "U-Net ~21x meilleur que la baseline Otsu sur le jeu de test."
 }
