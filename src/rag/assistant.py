@@ -20,6 +20,18 @@ from src.rag.embeddings import get_embeddings
 
 load_dotenv()
 
+# Parametres de generation du LLM (Bloc 7), explicites et documentes :
+# - temperature=0.0 : reponses factuelles et stables (aucune creativite),
+#   adapte a un contexte medical ou l'on veut de la fidelite.
+# - top_p=0.9 : on restreint aux tokens les plus probables.
+# - max_output_tokens=1024 : borne la longueur des reponses.
+PARAMS_LLM = {
+    "model": "gemini-2.5-flash",
+    "temperature": 0.0,
+    "top_p": 0.9,
+    "max_output_tokens": 1024,
+}
+
 GABARIT = """Tu es un assistant pedagogique en sante dentaire. Reponds en francais,
 de facon claire et prudente, en te basant UNIQUEMENT sur le contexte fourni.
 Si le contexte ne suffit pas, dis-le. Rappelle que tu n'es pas un diagnostic
@@ -57,9 +69,7 @@ class AssistantCaries:
     def _get_llm(self):
         if self._llm is None:
             from langchain_google_genai import ChatGoogleGenerativeAI
-            self._llm = ChatGoogleGenerativeAI(
-                model="gemini-2.5-flash", temperature=0.0, transport="rest"
-            )
+            self._llm = ChatGoogleGenerativeAI(transport="rest", **PARAMS_LLM)
         return self._llm
 
     def rechercher(self, question):

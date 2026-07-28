@@ -1,0 +1,10 @@
+{
+  "nb_images": 150,
+  "dice_moyen": 0.5044,
+  "dice_median": 0.5517,
+  "images_echec_dice_inf_0.1_%": 12.7,
+  "faux_positifs_pixels": 32834,
+  "faux_negatifs_pixels": 43740,
+  "rappel_pixel": 0.6178,
+  "precision_pixel": 0.6829
+}

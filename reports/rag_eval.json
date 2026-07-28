@@ -1,0 +1,72 @@
+{
+  "nb_questions": 6,
+  "retrieval_hit_at_4": 1.0,
+  "details": [
+    {
+      "question": "Qu'est-ce qu'une carie et quels sont ses stades ?",
+      "source_attendue": "01_caries_definition_stades.md",
+      "sources_recuperees": [
+        "01_caries_definition_stades.md",
+        "01_caries_definition_stades.md",
+        "02_traitement_par_stade.md",
+        "01_caries_definition_stades.md"
+      ],
+      "retrieval_hit": true
+    },
+    {
+      "question": "Comment traite-t-on une carie moderee ayant atteint la dentine ?",
+      "source_attendue": "02_traitement_par_stade.md",
+      "sources_recuperees": [
+        "02_traitement_par_stade.md",
+        "01_caries_definition_stades.md",
+        "01_caries_definition_stades.md",
+        "01_caries_definition_stades.md"
+      ],
+      "retrieval_hit": true
+    },
+    {
+      "question": "Une carie limitee a l'email necessite-t-elle un fraisage ?",
+      "source_attendue": "02_traitement_par_stade.md",
+      "sources_recuperees": [
+        "02_traitement_par_stade.md",
+        "01_caries_definition_stades.md",
+        "01_caries_definition_stades.md",
+        "01_caries_definition_stades.md"
+      ],
+      "retrieval_hit": true
+    },
+    {
+      "question": "Quand faut-il devitaliser une dent plutot que l'extraire ?",
+      "source_attendue": "03_devitalisation_vs_extraction.md",
+      "sources_recuperees": [
+        "03_devitalisation_vs_extraction.md",
+        "03_devitalisation_vs_extraction.md",
+        "02_traitement_par_stade.md",
+        "01_caries_definition_stades.md"
+      ],
+      "retrieval_hit": true
+    },
+    {
+      "question": "Quels facteurs orientent le choix entre traitement de canal et extraction ?",
+      "source_attendue": "03_devitalisation_vs_extraction.md",
+      "sources_recuperees": [
+        "03_devitalisation_vs_extraction.md",
+        "03_devitalisation_vs_extraction.md",
+        "03_devitalisation_vs_extraction.md",
+        "02_traitement_par_stade.md"
+      ],
+      "retrieval_hit": true
+    },
+    {
+      "question": "A quoi sert une radio panoramique pour depister les caries ?",
+      "source_attendue": "04_radio_panoramique_depistage.md",
+      "sources_recuperees": [
+        "04_radio_panoramique_depistage.md",
+        "01_caries_definition_stades.md",
+        "01_caries_definition_stades.md",
+        "04_radio_panoramique_depistage.md"
+      ],
+      "retrieval_hit": true
+    }
+  ]
+}

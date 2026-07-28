@@ -39,6 +39,17 @@ Source : [MLUA](https://github.com/Zzz512/MLUA) —
 [téléchargement](https://drive.google.com/file/d/1Xn1oGHvhGF9GbkcLEtCOV5QvWWqt1y62/view).
 Non versionné sur GitHub (voir `.gitignore`).
 
+- **Variables** : image (radio, niveaux de gris) → cible = masque binaire des
+  caries (segmentation pixel).
+- **Format** : PNG. `train/` = imagettes 384×384 ; `org_test_dataset/` =
+  panoramiques pleine résolution (distribution différente, non utilisée pour
+  l'évaluation — voir note plus bas).
+- **Licence / usage** : dataset de recherche public (via le dépôt MLUA), usage
+  académique. Vérifier les conditions sur le dépôt d'origine.
+- **Limites** : annotations issues d'un seul jeu, caries très minoritaires
+  (déséquilibre), pas d'information sur le stade (émail/dentine/pulpe), et biais
+  possible de la source. Résultats à considérer comme une preuve de concept.
+
 ## Structure
 
 ```
@@ -97,6 +108,19 @@ streamlit run app/app.py
 ```bash
 uvicorn app.api:app --reload      # http://localhost:8000/docs
 ```
+
+## Évaluations (rapports dans `reports/`)
+
+| Bloc | Script | Sortie |
+|---|---|---|
+| Bloc 1/3 — segmentation vs baseline | `src.model.evaluate` | `metrics_test.json` (Dice/IoU) |
+| Bloc 3 — analyse d'erreurs | `src.model.error_analysis` | `error_analysis.json`, figures |
+| Bloc 6 — recherche d'hyperparamètres | `src.model.tune` (en ligne) | `hyperparam_search.json` |
+| Bloc 4 — évaluation du RAG | `src.rag.evaluate_rag` | `rag_eval.json`, `rag_eval_comparaison.md` |
+
+Paramètres LLM (Bloc 7) explicites dans `src/rag/assistant.py` : `temperature=0`,
+`top_p=0.9`, `max_output_tokens=1024`, prompt système imposant des réponses
+uniquement fondées sur le contexte.
 
 ## Notes
 
