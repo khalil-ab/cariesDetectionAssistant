@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Caries Detection Assistant — Workflow du projet</title>
+<style>
+  :root{--core:#dc2626;--boost:#d97706;--periph:#16a34a;}
+  *{box-sizing:border-box}
+  body{font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;line-height:1.5;color:#1a1a1a;max-width:1100px;margin:0 auto;padding:24px;background:#fafafa;}
+  h1{font-size:1.7em;border-bottom:3px solid #2563eb;padding-bottom:8px;}
+  h2{font-size:1.15em;margin:30px 0 8px;padding:6px 12px;border-radius:6px;color:#fff;display:inline-block;}
+  p.note{color:#6b7280;font-size:.9em;margin:4px 0 14px;}
+  code{background:#eef2ff;color:#3730a3;padding:1px 5px;border-radius:4px;font-size:.88em;}
+  .tag{display:inline-block;font-size:.78em;font-weight:700;padding:2px 8px;border-radius:999px;white-space:nowrap;}
+  .t-local{background:#dcfce7;color:#166534;} .t-online{background:#fee2e2;color:#991b1b;} .t-crit{background:#ffedd5;color:#9a3412;}
+  .legend{font-size:.85em;color:#374151;margin:10px 0 20px;}
+  .legend .tag{margin-right:6px;}
+  footer{margin-top:34px;border-top:1px solid #d1d5db;padding-top:12px;font-size:.82em;color:#6b7280;}
+  ol.flow{background:#fff;border:1px solid #e5e7eb;border-radius:8px;padding:18px 18px 18px 42px;line-height:1.8;box-shadow:0 1px 3px rgba(0,0,0,.08);}
+  ol.flow li{margin-bottom:10px;}
+  ol.flow ul{margin:6px 0 4px;}
+  .tabs{display:flex;gap:6px;border-bottom:2px solid #d1d5db;margin:16px 0 22px;flex-wrap:wrap;}
+  .tabs button{cursor:pointer;border:0;background:none;padding:10px 18px;font-size:1em;font-family:inherit;color:#6b7280;border-bottom:3px solid transparent;margin-bottom:-2px;}
+  .tabs button:hover{color:#374151;}
+  .tabs button.active{color:#2563eb;border-bottom-color:#2563eb;font-weight:700;}
+  .tabpanel{display:none;} .tabpanel.active{display:block;}
+  h3.grp{font-size:1.02em;margin:24px 0 8px;color:#111827;border-left:4px solid #2563eb;padding-left:10px;}
+  ul.files{list-style:none;background:#fff;border:1px solid #e5e7eb;border-radius:8px;padding:14px 18px;box-shadow:0 1px 3px rgba(0,0,0,.08);margin:0;}
+  ul.files li{margin-bottom:9px;padding-left:2px;}
+  ul.files li:last-child{margin-bottom:0;}
+  ul.files .sh{display:inline-block;font-size:.72em;font-weight:700;color:#9a3412;background:#ffedd5;border-radius:999px;padding:1px 7px;margin-left:4px;vertical-align:middle;}
+  ul.files .git{display:inline-block;font-size:.72em;font-weight:700;color:#6b21a8;background:#f3e8ff;border-radius:999px;padding:1px 7px;margin-left:4px;vertical-align:middle;}
+  table.blocs{border-collapse:collapse;background:#fff;border:1px solid #e5e7eb;border-radius:8px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.08);width:100%;font-size:.9em;margin:6px 0 4px;}
+  table.blocs th,table.blocs td{border:1px solid #e5e7eb;padding:8px 10px;text-align:left;vertical-align:top;}
+  table.blocs th{background:#f3f4f6;}
+  .ok{color:#166534;font-weight:700;}
+  .theme-toggle{position:fixed;top:14px;right:14px;z-index:10;cursor:pointer;border:1px solid #d1d5db;background:#fff;color:#374151;border-radius:999px;padding:6px 12px;font-size:.85em;font-family:inherit;box-shadow:0 1px 3px rgba(0,0,0,.1);}
+  /* ---- Thème sombre ---- */
+  [data-theme="dark"] body{background:#0f1419;color:#e5e7eb;}
+  [data-theme="dark"] p.note,[data-theme="dark"] footer{color:#9ca3af;}
+  [data-theme="dark"] code{background:#1e293b;color:#c7d2fe;}
+  [data-theme="dark"] ol.flow,[data-theme="dark"] ul.files,[data-theme="dark"] table.blocs{background:#1a2230;border-color:#2d3748;box-shadow:0 1px 3px rgba(0,0,0,.4);}
+  [data-theme="dark"] table.blocs th,[data-theme="dark"] table.blocs td{border-color:#2d3748;}
+  [data-theme="dark"] table.blocs th{background:#222b3a;}
+  [data-theme="dark"] h3.grp{color:#e5e7eb;}
+  [data-theme="dark"] .legend{color:#cbd5e1;}
+  [data-theme="dark"] .tabs{border-bottom-color:#2d3748;}
+  [data-theme="dark"] .tabs button{color:#9ca3af;}
+  [data-theme="dark"] .tabs button.active{color:#60a5fa;border-bottom-color:#60a5fa;}
+  [data-theme="dark"] h1{border-bottom-color:#60a5fa;}
+  [data-theme="dark"] footer{border-top-color:#2d3748;}
+  [data-theme="dark"] .ok{color:#4ade80;}
+  [data-theme="dark"] .theme-toggle{background:#1a2230;color:#e5e7eb;border-color:#2d3748;}
+</style>
+</head>
+<body>
+
+<button class="theme-toggle" id="themeToggle" type="button">🌙 Sombre</button>
+
+<h1>Caries Detection Assistant — Workflow du projet</h1>
+
+<div class="tabs">
+  <button class="tabbtn active" data-tab="tab-workflow">Workflow</button>
+  <button class="tabbtn" data-tab="tab-blocs">Couverture des 7 blocs</button>
+  <button class="tabbtn" data-tab="tab-fichiers">Fichiers du projet</button>
+</div>
+
+<!-- ============ WORKFLOW ============ -->
+<section class="tabpanel active" id="tab-workflow">
+<p class="note"><strong>Le projet.</strong> Un outil qui, à partir d'une radio panoramique dentaire, <strong>détecte les caries</strong> (Deep Learning) puis, avec un <strong>assistant</strong> (RAG), explique le résultat et propose les traitements avec sources. <strong>Objectif :</strong> sur une radio, des caries sont manquées ou interprétées différemment selon le praticien — l'outil sert de <strong>second lecteur</strong>. Les deux briques (détection + assistant) servent le <strong>même cas d'usage</strong> et sont réellement intégrées. <strong>Contrainte machine</strong> : pas de GPU + proxy SSL → tout ce qui est lourd (entraînement, tuning) se fait <strong>en ligne (Colab GPU)</strong>, le reste (EDA, RAG, démo, API) tourne <strong>en local</strong>.</p>
+
+<div class="legend">
+  <span class="tag t-local">Local</span> sur ta machine &nbsp;
+  <span class="tag t-online">En ligne</span> Colab GPU &nbsp;
+  <span class="tag t-crit">Point critique</span> là où ça casse si on n'y prend pas garde
+</div>
+
+<h2 style="background:#374151">Au départ — cadrage</h2>
+<ol class="flow">
+  <li>On fixe le sujet en respectant la règle <strong>(ML ou DL) + (Agent ou RAG)</strong> : ici <strong>détection de caries (DL)</strong> + <strong>assistant de traitement (RAG)</strong>. <em>Pourquoi ce sujet</em> : sur radio, l'humain rate des caries et n'est pas constant → l'IA a une vraie valeur de second lecteur (contrairement à un problème que réglerait un simple seuil).</li>
+  <li>On cherche d'abord un <strong>dataset réel</strong>, sinon rien n'est possible : <strong>DC1000</strong> (~1000 radios + masques annotés par des dentistes). Il est stocké <strong>hors Git</strong> (1,1 Go) et téléchargé depuis sa source ; le repo ne garde que le code.</li>
+  <li>On regarde l'état de la machine : <strong>pas de GPU</strong>, un <strong>proxy SSL</strong> qui intercepte le réseau, et <code>transformers</code> cassé. <em>Conséquence</em> : l'entraînement se fera <strong>en ligne</strong>, et le RAG utilisera <strong>Gemini</strong> (embeddings + génération) plutôt que des modèles locaux lourds.</li>
+</ol>
+
+<h2 style="background:#2563eb">Phase 1 — Données &amp; EDA <span class="tag t-local">Local</span></h2>
+<ol class="flow" start="4">
+  <li><code>src/data/eda.py</code> explore le dataset : nombre d'images, tailles, exemples radio + masque, et la part de pixels « carie ». Les sorties vont dans <code>reports/</code> (stats + figures).</li>
+  <li><span class="tag t-crit">Découverte structurante</span> Les caries représentent <strong>≈ 1 % des pixels</strong> : très déséquilibré. <em>Pourquoi ça compte</em> : l'accuracy serait trompeuse → on choisit la métrique <strong>Dice/IoU</strong> et une perte <strong>Dice + BCE</strong> (dans <code>metrics.py</code>) qui résiste au déséquilibre.</li>
+</ol>
+
+<h2 style="background:#d97706">Phase 2 — Modèle de détection (U-Net) <span class="tag t-online">En ligne</span></h2>
+<ol class="flow" start="6">
+  <li>Le code est en <strong>scripts <code>.py</code></strong> (pas tout dans un notebook) pour un pipeline reproductible : <code>unet.py</code> (architecture), <code>dataset.py</code> (chargement + split), <code>train.py</code> (entraînement + suivi MLflow), <code>predict.py</code> (inférence). <em>Pourquoi U-Net</em> : on veut <strong>localiser et mesurer</strong> chaque carie au pixel (segmentation), pas seulement dire « carie / pas carie ».</li>
+  <li>On prévoit une <strong>baseline</strong> (seuillage d'Otsu dans <code>evaluate.py</code>) pour prouver que le Deep Learning apporte réellement quelque chose.</li>
+  <li>L'entraînement se lance <strong>en ligne</strong> via <code>notebooks/entrainement_colab.ipynb</code> : il clone le repo, télécharge DC1000, entraîne sur GPU, puis on récupère <code>models/unet_caries.pth</code>.</li>
+  <li><span class="tag t-crit">Piège Colab</span> Après un <code>git pull</code>, il faut <strong>redémarrer la session</strong> (Python garde l'ancien code en cache) et vérifier <code>Device : cuda</code> (sinon l'entraînement part sur CPU, très lent).</li>
+</ol>
+
+<h2 style="background:#16a34a">Phase 3 — Évaluation &amp; analyse d'erreurs <span class="tag t-online">En ligne</span></h2>
+<ol class="flow" start="10">
+  <li><span class="tag t-crit">Piège majeur — décalage de distribution</span> Au début, on évaluait sur les <strong>panoramiques pleine résolution</strong> alors que le modèle s'entraîne sur des <strong>imagettes 384×384</strong> : deux distributions différentes → Dice ≈ 0, chiffre trompeur. <em>Correction</em> : un découpage <strong>train / val / test</strong> de la même distribution (dans <code>dataset.py</code>), le test jamais vu à l'entraînement.</li>
+  <li>Résultat honnête : <strong>U-Net Dice ≈ 0,42-0,46</strong> contre <strong>baseline Otsu ≈ 0,02</strong> (≈ 21× mieux). Écrit dans <code>reports/metrics_test.json</code>.</li>
+  <li><code>src/model/error_analysis.py</code> détaille les erreurs : Dice par image, <strong>pires et meilleurs cas</strong>, faux positifs / faux négatifs. On constate que le modèle <strong>rate un peu plus de caries qu'il n'en invente</strong> — utile pour les pistes d'amélioration.</li>
+</ol>
+
+<h2 style="background:#7c3aed">Phase 4 — Assistant RAG <span class="tag t-local">Local</span></h2>
+<ol class="flow" start="13">
+  <li>On rédige un <strong>corpus sourcé</strong> dans <code>rag_corpus/</code> (fiches : définition/stades des caries, traitements, dévitalisation vs extraction, radio panoramique).</li>
+  <li><code>src/rag/ingest.py</code> découpe ces fiches en chunks, calcule les <strong>embeddings Gemini</strong> et construit l'index <strong>Chroma</strong> (<code>chroma_caries/</code>, régénérable, hors Git).</li>
+  <li><code>src/rag/assistant.py</code> récupère les passages pertinents et génère une <strong>réponse sourcée</strong>. Paramètres LLM <strong>explicites</strong> : <code>temperature=0</code>, <code>top_p=0.9</code>, <code>max_output_tokens=1024</code>, prompt système « réponds uniquement d'après le contexte ». <em>Pourquoi</em> : on veut de la fidélité, pas de la créativité qui inventerait des faits médicaux.</li>
+  <li><code>src/rag/evaluate_rag.py</code> mesure la qualité : <strong>pertinence du retrieval</strong> (hit@k) et comparaison <strong>LLM seul vs LLM + RAG</strong> → montre que sans sources, le LLM répond de façon moins fondée.</li>
+  <li><span class="tag t-crit">Piège SSL</span> Le proxy bloque l'API Google en local → flag <code>CARIES_INSECURE_SSL=1</code> dans <code>.env</code> (jamais commité, géré par <code>src/rag/_ssl.py</code>). En ligne, on ne l'active pas.</li>
+</ol>
+
+<h2 style="background:#0891b2">Phase 5 — Intégration &amp; démo <span class="tag t-local">Local</span></h2>
+<ol class="flow" start="18">
+  <li><span class="tag t-crit">Le cœur du fil rouge</span> On <strong>branche les deux blocs</strong> : la sortie de la détection (nombre de zones, surface) devient le <strong>contexte de l'assistant</strong>. Les deux ne sont pas juxtaposés, ils s'enchaînent dans un même flux.</li>
+  <li><code>app/app.py</code> — démo <strong>Streamlit</strong> : on charge une radio → caries surlignées + réponse sourcée. Le cas « modèle absent » est géré proprement.</li>
+  <li><code>app/api.py</code> — <strong>API FastAPI</strong> : <code>/predict</code> (détection), <code>/assistant</code> (réponse), <code>/health</code>.</li>
+</ol>
+
+<h2 style="background:#b45309">Phase 6 — Hyperparamètres &amp; MLOps <span class="tag t-online">En ligne</span></h2>
+<ol class="flow" start="21">
+  <li><code>src/model/tune.py</code> compare plusieurs configurations (lr, filtres, taille), loguées dans <strong>MLflow</strong>, et retient la meilleure (<code>reports/hyperparam_search.json</code>).</li>
+  <li><span class="tag t-crit">Piège corrigé</span> Le tuning ne doit <strong>pas écraser</strong> le modèle de production : une config de taille différente casserait l'inférence en 256. On garde le modèle 256 comme référence.</li>
+  <li>Bonus MLOps : <strong>MLflow</strong> (suivi des runs), <strong>Docker</strong> (<code>Dockerfile</code> pour l'API), données et modèles versionnés hors Git.</li>
+</ol>
+
+<h2 style="background:#374151">Phase 7 — Livrables</h2>
+<ol class="flow" start="24">
+  <li>Le <strong>cahier des charges</strong>, le <strong>dépôt GitHub</strong> (code, README, notebooks, requirements, Dockerfile, rapports), la <strong>démo</strong> exécutable et la <strong>présentation 10-12 slides</strong>.</li>
+</ol>
+
+<p class="note">Fil conducteur : une seule vraie dépendance forte — <strong>les données, puis le modèle entraîné</strong> ; tout le reste (RAG, démo, API, rapports) s'articule autour. La contrainte machine impose la frontière local / en ligne, mais ne bloque aucune étape.</p>
+</section>
+
+<!-- ============ COUVERTURE DES BLOCS ============ -->
+<section class="tabpanel" id="tab-blocs">
+<p class="note">Comment chaque compétence de la grille est couverte, et par quel fichier du projet.</p>
+<table class="blocs">
+  <tr><th>Bloc</th><th>Ce qui est demandé</th><th>Où c'est couvert</th></tr>
+  <tr><td>1 — EDA</td><td>Données documentées + préparation + analyse</td><td><span class="ok">✓</span> <code>src/data/eda.py</code>, <code>reports/eda_*</code>, README (source, licence, limites)</td></tr>
+  <tr><td>2 — Modèle DL</td><td>Choix justifié, pipeline reproductible, intégré à l'app</td><td><span class="ok">✓</span> U-Net, <code>train.py</code>, <code>predict.py</code>, démo</td></tr>
+  <tr><td>3 — Évaluation</td><td>Métriques adaptées, sans fuite, vs baseline, analyse d'erreurs</td><td><span class="ok">✓</span> Dice/IoU, split 3 voies, <code>error_analysis.py</code></td></tr>
+  <tr><td>4 — Système LLM</td><td>RAG cohérent, composants intégrés, évalué</td><td><span class="ok">✓</span> Chroma + Gemini, hit@4 = 1,0, <code>rag_eval_comparaison.md</code></td></tr>
+  <tr><td>5 — Intégration</td><td>Deux blocs, même problème, flux cohérent</td><td><span class="ok">✓</span> détection → contexte de l'assistant</td></tr>
+  <tr><td>6 — Hyperparamètres</td><td>Identifiés, ajustés (recherche), config documentée</td><td><span class="ok">✓</span> <code>tune.py</code>, <code>hyperparam_search.json</code>, MLflow</td></tr>
+  <tr><td>7 — Paramètres LLM</td><td>Température, top-p, max tokens, prompt système explicites</td><td><span class="ok">✓</span> <code>PARAMS_LLM</code> dans <code>assistant.py</code></td></tr>
+</table>
+</section>
+
+<!-- ============ FICHIERS ============ -->
+<section class="tabpanel" id="tab-fichiers">
+<p class="note">Tout ce que contient le dépôt, et à quoi sert chaque fichier. Les données, modèles et secrets sont <span class="git">hors Git</span>.</p>
+
+<h3 class="grp">Racine</h3>
+<ul class="files">
+  <li><code>README.md</code> — objectif métier, stack, données (source, licence, limites), utilisation, liste des évaluations.</li>
+  <li><code>requirements.txt</code> — dépendances Python.</li>
+  <li><code>Dockerfile</code> — image de l'API FastAPI (bonus MLOps).</li>
+  <li><code>.env.example</code> — modèle de configuration ; le vrai <code>.env</code> (clé Gemini + flag SSL) est <span class="git">hors Git</span>.</li>
+  <li><code>workflow-projet.html</code> — ce document.</li>
+</ul>
+
+<h3 class="grp">Code — <code>src/</code></h3>
+<ul class="files">
+  <li><code>src/config.py</code> — chemins et hyperparamètres centralisés (une seule source de vérité).</li>
+  <li><code>src/data/dataset.py</code> — charge une radio + son masque, et fait le <strong>découpage train/val/test</strong> (déterministe, sans fuite).</li>
+  <li><code>src/data/eda.py</code> — analyse exploratoire (stats + figures).</li>
+  <li><code>src/model/unet.py</code> — l'architecture U-Net.</li>
+  <li><code>src/model/metrics.py</code> — la perte Dice+BCE (adaptée au déséquilibre) et les métriques Dice/IoU.</li>
+  <li><code>src/model/train.py</code> — l'entraînement (sur GPU en ligne), avec suivi MLflow et sauvegarde du meilleur modèle.</li>
+  <li><code>src/model/evaluate.py</code> — évalue le U-Net sur le test et le compare à la baseline Otsu.</li>
+  <li><code>src/model/error_analysis.py</code> — analyse d'erreurs : Dice par image, pires/meilleurs cas, faux positifs/négatifs.</li>
+  <li><code>src/model/tune.py</code> — recherche d'hyperparamètres (compare plusieurs configs, log MLflow).</li>
+  <li><code>src/model/predict.py</code> — inférence : d'une radio vers un masque + stats. Utilisé par la démo et l'API.</li>
+  <li><code>src/rag/ingest.py</code> — construit l'index vectoriel Chroma à partir du corpus.</li>
+  <li><code>src/rag/embeddings.py</code> — fournit les embeddings Gemini (pas de dépendance locale lourde).</li>
+  <li><code>src/rag/assistant.py</code> — retrieval + génération sourcée ; contient les paramètres LLM explicites.</li>
+  <li><code>src/rag/evaluate_rag.py</code> — évalue le RAG (hit@k + LLM seul vs LLM+RAG).</li>
+  <li><code>src/rag/_ssl.py</code> — contournement du proxy SSL en local (activé par un flag, jamais en ligne).</li>
+</ul>
+
+<h3 class="grp">Contenu &amp; notebooks</h3>
+<ul class="files">
+  <li><code>rag_corpus/*.md</code> — les fiches sources de l'assistant (définition/stades, traitements, dévitalisation vs extraction, radio).</li>
+  <li><code>notebooks/entrainement_colab.ipynb</code> — entraînement + tuning + analyse d'erreurs sur GPU en ligne.</li>
+  <li><code>notebooks/eda.ipynb</code> — exploration des données (le PDF attend un/des notebook(s)).</li>
+</ul>
+
+<h3 class="grp">Application</h3>
+<ul class="files">
+  <li><code>app/app.py</code> — démo Streamlit : radio → caries surlignées + assistant.</li>
+  <li><code>app/api.py</code> — API FastAPI (<code>/predict</code>, <code>/assistant</code>, <code>/health</code>).</li>
+</ul>
+
+<h3 class="grp">Rapports — <code>reports/</code> (les preuves)</h3>
+<ul class="files">
+  <li><code>eda_stats.json</code>, <code>eda_*.png</code> — sorties de l'EDA (dont le déséquilibre).</li>
+  <li><code>metrics_test.json</code> — Dice/IoU du U-Net vs baseline.</li>
+  <li><code>error_analysis.json</code>, <code>error_*.png</code> — analyse d'erreurs.</li>
+  <li><code>hyperparam_search.json</code> — comparaison des configurations.</li>
+  <li><code>rag_eval.json</code>, <code>rag_eval_comparaison.md</code> — évaluation du RAG.</li>
+</ul>
+
+<h3 class="grp">Hors Git <span class="git">non versionné</span></h3>
+<ul class="files">
+  <li><code>data/</code> — dataset DC1000 (~1,1 Go), téléchargé depuis la source.</li>
+  <li><code>models/unet_caries.pth</code> — le modèle entraîné (récupéré depuis Colab).</li>
+  <li><code>chroma_caries/</code> — l'index vectoriel, régénéré par <code>ingest.py</code>.</li>
+  <li><code>.env</code> — la clé Gemini et le flag SSL local.</li>
+</ul>
+</section>
+
+<script>
+(function(){
+  var btns=document.querySelectorAll('.tabbtn'),panels=document.querySelectorAll('.tabpanel');
+  btns.forEach(function(b){b.onclick=function(){
+    btns.forEach(function(x){x.classList.remove('active');});
+    panels.forEach(function(p){p.classList.remove('active');});
+    b.classList.add('active');
+    document.getElementById(b.dataset.tab).classList.add('active');
+  };});
+})();
+</script>
+
+<footer>Caries Detection Assistant — projet fil rouge : détection DL des caries + assistant RAG, deux blocs intégrés dans un même cas d'usage.</footer>
+
+<script>
+(function(){
+  var root=document.documentElement, btn=document.getElementById('themeToggle');
+  function apply(t){
+    root.setAttribute('data-theme',t);
+    btn.textContent = (t==='dark') ? '☀️ Clair' : '🌙 Sombre';
+    try{ localStorage.setItem('theme',t); }catch(e){}
+  }
+  var saved;
+  try{ saved=localStorage.getItem('theme'); }catch(e){}
+  if(!saved){ saved = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark':'light'; }
+  apply(saved);
+  btn.onclick=function(){ apply(root.getAttribute('data-theme')==='dark' ? 'light':'dark'); };
+})();
+</script>
+
+</body>
+</html>
